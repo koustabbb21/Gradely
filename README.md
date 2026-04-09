@@ -1,4 +1,4 @@
-# Gradely.io
+# Gradely
 
 A beautiful, minimalist, and responsive Single-Page Application (SPA) designed to help students track and manage their academic performance with precision.
 
