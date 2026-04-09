@@ -61,7 +61,7 @@ function getCgpaRowTemplate(index) {
                     <input class="cgpa-sgpa w-full bg-surface-container-lowest/50 border-0 rounded-lg focus:ring-2 focus:ring-surface-tint text-sm font-medium" type="number" step="0.01" value="0.00">
                 </div>
                 <div class="space-y-2 md:col-span-1 col-span-2">
-                    <label class="text-[10px] font-label uppercase text-on-surface-variant px-1">Credits Earned</label>
+                    <label class="text-[10px] font-label uppercase text-on-surface-variant px-1">Total Credits</label>
                     <input class="cgpa-credit w-full bg-surface-container-lowest/50 border-0 rounded-lg focus:ring-2 focus:ring-surface-tint text-sm font-medium" type="number" value="0">
                 </div>
             </div>
