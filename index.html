@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>GradeCalc</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="style.css">
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-surface-variant": "#48454f",
+                    "surface-container-high": "#efe7dd",
+                    "surface-container": "#f5ede3",
+                    "surface-variant": "#e9e1d7",
+                    "outline-variant": "#cac4d0",
+                    "secondary": "#466368",
+                    "tertiary-fixed": "#f1dbff",
+                    "surface-container-highest": "#e9e1d7",
+                    "surface-bright": "#fff8f2",
+                    "tertiary-container": "#a48eb5",
+                    "on-tertiary-fixed": "#241433",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary-container": "#4a676d",
+                    "on-error": "#ffffff",
+                    "on-primary-fixed-variant": "#4a3f72",
+                    "surface": "#fff8f2",
+                    "surface-container-low": "#fbf2e8",
+                    "on-secondary-fixed-variant": "#2e4b50",
+                    "on-background": "#1e1b15",
+                    "error-container": "#ffdad6",
+                    "on-primary-container": "#322658",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary-container": "#392748",
+                    "on-primary-fixed": "#1e1244",
+                    "inverse-surface": "#343029",
+                    "primary-container": "#9b8ec7",
+                    "secondary-fixed": "#c9e8ee",
+                    "tertiary-fixed-dim": "#d6bee7",
+                    "error": "#ba1a1a",
+                    "primary-fixed-dim": "#ccbefa",
+                    "surface-tint": "#62578c",
+                    "secondary-container": "#c6e5eb",
+                    "inverse-primary": "#ccbefa",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "on-tertiary-fixed-variant": "#523f61",
+                    "secondary-fixed-dim": "#adccd2",
+                    "on-secondary-fixed": "#001f24",
+                    "on-primary": "#ffffff",
+                    "outline": "#797580",
+                    "inverse-on-surface": "#f8f0e5",
+                    "tertiary": "#6a577a",
+                    "primary-fixed": "#e7deff",
+                    "background": "#fff8f2",
+                    "surface-dim": "#e1d9cf",
+                    "on-surface": "#1e1b15",
+                    "primary": "#62578c"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Inter"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-surface text-on-surface font-body min-h-screen selection:bg-primary-container/30">
+    <nav class="fixed top-0 left-0 w-full z-[80] bg-[#F2EAE0]/70 backdrop-blur-xl transition-all duration-400">
+        <div class="flex justify-between items-center px-[10%] py-6 w-full max-w-7xl mx-auto">
+            <div class="text-2xl font-bold tracking-[-0.02em] text-[#1E1B15] cursor-pointer" onclick="navigate('welcome')">GradeCalc</div>
+            <div class="hidden md:flex items-center space-x-12">
+                <button onclick="navigate('welcome')" id="nav-welcome" class="nav-link text-[#62578C] border-b-2 border-[#62578C] pb-1 font-semibold transition-colors duration-400">Welcome</button>
+                <button onclick="navigate('cgpa')" id="nav-cgpa" class="nav-link text-[#1E1B15]/60 font-medium hover:text-[#62578C] transition-colors duration-400">CGPA</button>
+                <button onclick="navigate('sgpa')" id="nav-sgpa" class="nav-link text-[#1E1B15]/60 font-medium hover:text-[#62578C] transition-colors duration-400">SGPA</button>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button class="p-2 rounded-full hover:bg-surface-container transition-colors">
+                    <span class="material-symbols-outlined text-on-surface">settings</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div id="screen-welcome" class="screen-container block">
+        <div class="flex pt-16 min-h-screen">
+<!-- SideNavBar (Desktop Only) -->
+<aside class="hidden md:flex flex-col p-6 gap-4 bg-[#FBF2E8] w-64 fixed h-full left-0 border-r-0">
+<div class="mb-8 px-2">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest overflow-hidden">
+<img alt="User Profile" data-alt="close-up portrait of a professional young man with a friendly expression in a brightly lit studio setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMNYZOohPHhHlUGjesa3GxVfx-WNm1X0LPzqpFHq77SPb1f5ly3yWgZ8jVOsqkCSsP2dqXzmN5idf_sCBxoOEMDBtzDSduPCQAfD1l3lLfbVADSRl8mnVkpfvcxwes9SQ0zr_55pe9W4fAgMNZlPHkMG14Nbyr7tq_B7wx7Y8lvoTThe41Vc1iO-u3z9hUb-b2f47wNnVysl9bB87m0FtjiCSqwgnlRuAiKNEVjrQ3u55Lv8z_LFVfncw6rTdfEJh5EyKGbKfVxp7t"/>
+</div>
+<div>
+<p class="text-[10px] font-medium uppercase tracking-widest text-[#1E1B15]/70">Academic Hub</p>
+<p class="text-xs font-semibold text-[#62578C]">Track your progress</p>
+</div>
+</div>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-4 py-3 bg-gradient-to-br from-[#62578C] to-[#9B8EC7] text-white rounded-lg transition-transform duration-400 hover:translate-x-1" href="#">
+<span class="material-symbols-outlined" data-icon="auto_awesome">auto_awesome</span>
+<span class="font-medium text-xs uppercase tracking-widest">Welcome</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#1E1B15]/70 hover:translate-x-1 transition-transform duration-400" href="#">
+<span class="material-symbols-outlined" data-icon="calculate">calculate</span>
+<span class="font-medium text-xs uppercase tracking-widest">CGPA Calculator</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#1E1B15]/70 hover:translate-x-1 transition-transform duration-400" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-medium text-xs uppercase tracking-widest">SGPA Calculator</span>
+</a>
+</nav>
+</aside>
+<!-- Main Canvas -->
+<main class="flex-1 md:ml-64 px-6 md:px-12 py-12 bg-background">
+<!-- Editorial Masthead -->
+<section class="mt-12 mb-20 md:pl-[10%] md:pr-[20%]">
+<p class="text-[10px] font-bold uppercase tracking-[0.2em] text-primary mb-4">Academic Excellence</p>
+<h1 class="text-5xl md:text-7xl font-bold tracking-tighter text-on-background leading-[0.9] mb-6">
+                    Master your grades with <span class="text-primary italic">precision.</span>
+</h1>
+<p class="text-lg text-on-surface-variant max-w-xl leading-relaxed">
+                    A calm space to calculate, track, and visualize your academic journey. Choose your focus to begin your session.
+                </p>
+</section>
+<!-- Action Cards Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 max-w-6xl mx-auto">
+<!-- CGPA Card -->
+<div class="group relative overflow-hidden rounded-xl bg-surface-container-low p-8 transition-all duration-400 hover:bg-surface-container">
+<div class="relative z-10">
+<div class="w-14 h-14 rounded-lg bg-surface-container-highest flex items-center justify-center mb-8 text-primary group-hover:scale-110 transition-transform duration-400">
+<span class="material-symbols-outlined text-3xl" data-icon="calculate">calculate</span>
+</div>
+<h3 class="text-2xl font-bold tracking-tight text-on-surface mb-3">CGPA Calculator</h3>
+<p class="text-on-surface-variant mb-8 leading-relaxed">
+                            Aggregate your performance across all semesters to determine your cumulative grade point average with effortless accuracy.
+                        </p>
+<button class="inline-flex items-center gap-2 ethereal-gradient text-white px-6 py-3 rounded-lg font-semibold text-sm transition-all duration-400 shadow-xl shadow-primary/10">
+                            Start Calculation
+                            <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<!-- Decorative Element -->
+<div class="absolute -right-12 -bottom-12 w-48 h-48 bg-primary-container/10 rounded-full blur-3xl group-hover:bg-primary-container/20 transition-colors duration-400"></div>
+</div>
+<!-- SGPA Card -->
+<div class="group relative overflow-hidden rounded-xl bg-surface-container-low p-8 transition-all duration-400 hover:bg-surface-container">
+<div class="relative z-10">
+<div class="w-14 h-14 rounded-lg bg-surface-container-highest flex items-center justify-center mb-8 text-primary group-hover:scale-110 transition-transform duration-400">
+<span class="material-symbols-outlined text-3xl" data-icon="analytics">analytics</span>
+</div>
+<h3 class="text-2xl font-bold tracking-tight text-on-surface mb-3">SGPA Calculator</h3>
+<p class="text-on-surface-variant mb-8 leading-relaxed">
+                            Focus on your current progress. Input your individual course credits and grades to discover your semester performance.
+                        </p>
+<button class="inline-flex items-center gap-2 bg-secondary-container text-on-secondary-container px-6 py-3 rounded-lg font-semibold text-sm transition-all duration-400 hover:bg-secondary-fixed-dim">
+                            Begin Semester Track
+                            <span class="material-symbols-outlined text-sm" data-icon="bolt">bolt</span>
+</button>
+</div>
+<!-- Decorative Element -->
+<div class="absolute -right-12 -bottom-12 w-48 h-48 bg-secondary-container/10 rounded-full blur-3xl group-hover:bg-secondary-container/20 transition-colors duration-400"></div>
+</div>
+</div>
+<!-- Subtle Background Motif -->
+<div class="fixed top-0 right-0 -z-10 w-full h-full pointer-events-none opacity-30">
+<div class="absolute top-[-10%] right-[-5%] w-[60%] h-[60%] bg-[#BDA6CE]/20 rounded-full blur-[120px]"></div>
+<div class="absolute bottom-[-10%] left-[-5%] w-[50%] h-[50%] bg-[#B4D3D9]/20 rounded-full blur-[100px]"></div>
+</div>
+</main>
+</div>
+    </div>
+
+    <div id="screen-cgpa" class="screen-container hidden">
+        <main class="pt-24 pb-32 max-w-7xl mx-auto px-6 md:px-[10%]">
+<!-- Editorial Masthead -->
+<header class="mb-12 py-12 md:py-20">
+<p class="text-primary font-label uppercase tracking-[0.05em] text-xs mb-4">Academic Projection</p>
+<h1 class="text-5xl md:text-7xl font-bold tracking-[-0.02em] text-on-surface mb-6 max-w-2xl">CGPA Calculator</h1>
+<p class="text-lg md:text-xl text-on-surface-variant font-light leading-relaxed max-w-xl">
+                Fine-tune your academic performance. Manage your cumulative grade point average with precision and clarity.
+            </p>
+</header>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- Main Input Column -->
+<div class="lg:col-span-8 space-y-8">
+<!-- Summary Card -->
+<div class="bg-surface-container-low rounded-[1.5rem] p-8 flex flex-col md:flex-row gap-8 items-center justify-between">
+<div class="flex flex-col gap-1">
+<span class="text-xs font-label uppercase tracking-[0.05em] text-on-surface-variant">Cumulative Score</span>
+<div class="text-6xl font-bold tracking-tighter text-primary">3.84</div>
+</div>
+<div class="flex gap-4 w-full md:w-auto">
+<div class="flex-1 bg-surface-container rounded-xl p-4 text-center">
+<span class="block text-[10px] font-label uppercase text-on-surface-variant mb-1">Total Credits</span>
+<span class="text-xl font-bold">104</span>
+</div>
+<div class="flex-1 bg-surface-container rounded-xl p-4 text-center">
+<span class="block text-[10px] font-label uppercase text-on-surface-variant mb-1">Completed</span>
+<span class="text-xl font-bold">8/10</span>
+</div>
+</div>
+</div>
+<!-- Semester Rows -->
+<div class="space-y-4">
+<div class="flex items-center justify-between px-4">
+<h2 class="text-xl font-bold tracking-tight">Semesters</h2>
+<button class="flex items-center gap-2 text-primary font-semibold text-sm hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined text-lg">add_circle</span>
+                            Add Semester
+                        </button>
+</div>
+<!-- Row 1 -->
+<div class="group bg-surface-container rounded-[1.5rem] p-6 hover:bg-surface-container-high ethereal-fade">
+<div class="flex flex-col md:flex-row md:items-center gap-6">
+<div class="flex-shrink-0 w-12 h-12 rounded-2xl bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="font-bold">S1</span>
+</div>
+<div class="flex-grow grid grid-cols-2 md:grid-cols-3 gap-6">
+<div class="space-y-2">
+<label class="text-[10px] font-label uppercase text-on-surface-variant px-1">Semester Name</label>
+<input class="w-full bg-surface-container-lowest/50 border-0 rounded-lg focus:ring-2 focus:ring-surface-tint text-sm font-medium" type="text" value="Fall 2023"/>
+</div>
+<div class="space-y-2">
+<label class="text-[10px] font-label uppercase text-on-surface-variant px-1">SGPA</label>
+<input class="w-full bg-surface-container-lowest/50 border-0 rounded-lg focus:ring-2 focus:ring-surface-tint text-sm font-medium" step="0.01" type="number" value="3.92"/>
+</div>
+<div class="space-y-2 md:col-span-1 col-span-2">
+<label class="text-[10px] font-label uppercase text-on-surface-variant px-1">Credits Earned</label>
+<input class="w-full bg-surface-container-lowest/50 border-0 rounded-lg focus:ring-2 focus:ring-surface-tint text-sm font-medium" type="number" value="18"/>
+</div>
+</div>
+<button class="text-outline hover:text-error transition-colors p-2">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="group bg-surface-container rounded-[1.5rem] p-6 hover:bg-surface-container-high ethereal-fade">
+<div class="flex flex-col md:flex-row md:items-center gap-6">
+<div class="flex-shrink-0 w-12 h-12 rounded-2xl bg-[#B4D3D9]/30 flex items-center justify-center text-[#466368]">
+<span class="font-bold">S2</span>
+</div>
+<div class="flex-grow grid grid-cols-2 md:grid-cols-3 gap-6">
+<div class="space-y-2">
+<label class="text-[10px] font-label uppercase text-on-surface-variant px-1">Semester Name</label>
+<input class="w-full bg-surface-container-lowest/50 border-0 rounded-lg focus:ring-2 focus:ring-surface-tint text-sm font-medium" type="text" value="Spring 2024"/>
+</div>
+<div class="space-y-2">
+<label class="text-[10px] font-label uppercase text-on-surface-variant px-1">SGPA</label>
+<input class="w-full bg-surface-container-lowest/50 border-0 rounded-lg focus:ring-2 focus:ring-surface-tint text-sm font-medium" step="0.01" type="number" value="3.76"/>
+</div>
+<div class="space-y-2 md:col-span-1 col-span-2">
+<label class="text-[10px] font-label uppercase text-on-surface-variant px-1">Credits Earned</label>
+<input class="w-full bg-surface-container-lowest/50 border-0 rounded-lg focus:ring-2 focus:ring-surface-tint text-sm font-medium" type="number" value="15"/>
+</div>
+</div>
+<button class="text-outline hover:text-error transition-colors p-2">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Dynamic Display Column -->
+<div class="lg:col-span-4 space-y-6 lg:sticky lg:top-32">
+<!-- Action Card -->
+<div class="bg-surface-container-highest/30 rounded-[2rem] p-8 space-y-6">
+<h3 class="text-xl font-bold tracking-tight">Quick Actions</h3>
+<button class="w-full py-4 px-6 bg-gradient-to-br from-primary to-primary-container text-white rounded-xl font-semibold shadow-lg shadow-primary/20 hover:scale-[0.98] transition-transform">
+                        Calculate Final CGPA
+                    </button>
+<button class="w-full py-4 px-6 bg-secondary-container text-on-secondary-container rounded-xl font-semibold hover:bg-secondary-container/80 transition-colors">
+                        Save Configuration
+                    </button>
+<div class="pt-4 border-t border-outline-variant/20 space-y-4">
+<div class="flex items-center justify-between text-sm">
+<span class="text-on-surface-variant">Last Updated</span>
+<span class="font-medium">2 mins ago</span>
+</div>
+<div class="flex items-center justify-between text-sm">
+<span class="text-on-surface-variant">Cloud Sync</span>
+<span class="text-primary font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">cloud_done</span>
+                                Active
+                            </span>
+</div>
+</div>
+</div>
+<!-- Insights Bento Item -->
+<div class="bg-[#BDA6CE]/20 rounded-[2rem] p-8 overflow-hidden relative group">
+<div class="relative z-10">
+<span class="material-symbols-outlined text-[#6A577A] mb-4">trending_up</span>
+<h4 class="text-lg font-bold text-[#392748] mb-2">Performance Insight</h4>
+<p class="text-sm text-[#392748]/80 leading-relaxed">
+                            Your CGPA has increased by 0.12 points since the last semester. You are currently in the top 10% of your class.
+                        </p>
+</div>
+<div class="absolute -bottom-10 -right-10 w-40 h-40 bg-[#9B8EC7]/20 rounded-full blur-3xl group-hover:scale-125 ethereal-fade"></div>
+</div>
+<!-- Ad/Tip Card -->
+<div class="bg-surface-container rounded-[2rem] p-6 flex items-center gap-4">
+<div class="flex-shrink-0 w-14 h-14 bg-surface-container-highest rounded-2xl overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="abstract architectural minimalist design with soft light and geometric shadows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCTZhVEJSA48lzjlZG1tgQ5S3qO_gbgil6VU_ElfPoy-cZuSSik7xjTkKdpe8Sz9E877-iGSMOrILu6XNYOYzNYpAgr7FxBajoLGW7hw7URCgWR0XjP_s3nROqkc7VtJQeHpXLW0D1vJyJC02TUOxxV0oqRbeMnvthXKI-QVdFpVW3T8q5kP-c2ARPNSC0zNNMPBDnNs5k7M4WyHuHSQ8T5x8Gm0-ODVMBposWe15N8bx1wpgG9eehwDWtOd8fTUhEcXLUxhtsrPfp"/>
+</div>
+<div>
+<p class="text-xs font-label uppercase tracking-widest text-on-surface-variant mb-1">Expert Tip</p>
+<p class="text-sm font-medium">How to optimize your study credits this year.</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+    </div>
+
+    <div id="screen-sgpa" class="screen-container hidden">
+        <main class="pt-32 px-6 md:px-[10%] max-w-4xl mx-auto">
+<!-- Editorial Masthead -->
+<header class="mb-12">
+<span class="font-label text-[10px] uppercase tracking-[0.05em] text-primary mb-2 block">Semester Grade Point Average</span>
+<h1 class="font-headline text-5xl md:text-7xl font-extrabold tracking-[-0.02em] text-on-surface mb-4">SGPA Calculator</h1>
+<p class="font-body text-lg text-on-surface-variant max-w-xl">Input your subject credits and grades to determine your academic performance for the current term.</p>
+</header>
+<div class="grid grid-cols-1 gap-12">
+<!-- Main Input Area -->
+<section class="space-y-4">
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-xl font-semibold">Course List</h2>
+<button class="text-primary font-semibold flex items-center gap-2 hover:opacity-70 transition-opacity">
+<span class="material-symbols-outlined text-xl" data-icon="add_circle">add_circle</span>
+                        Add Subject
+                    </button>
+</div>
+<!-- Subject Row 1 -->
+<div class="bg-surface-container-low rounded-xl p-5 flex flex-wrap md:flex-nowrap items-center gap-4 border border-transparent hover:border-outline-variant/15 transition-all">
+<div class="flex-grow min-w-[200px]">
+<label class="font-label text-[10px] uppercase tracking-wider text-on-surface-variant mb-1 block">Subject Name</label>
+<input class="w-full bg-surface-container-highest/50 border-none rounded-lg px-4 py-2 focus:ring-2 focus:ring-surface-tint focus:bg-surface-container-lowest transition-all placeholder:text-on-surface-variant/40" placeholder="e.g. Data Structures" type="text"/>
+</div>
+<div class="w-24">
+<label class="font-label text-[10px] uppercase tracking-wider text-on-surface-variant mb-1 block">Credits</label>
+<select class="w-full bg-surface-container-highest/50 border-none rounded-lg px-3 py-2 focus:ring-2 focus:ring-surface-tint appearance-none">
+<option>4</option>
+<option>3</option>
+<option>2</option>
+<option>1</option>
+</select>
+</div>
+<div class="w-32">
+<label class="font-label text-[10px] uppercase tracking-wider text-on-surface-variant mb-1 block">Grade</label>
+<select class="w-full bg-surface-container-highest/50 border-none rounded-lg px-3 py-2 font-bold text-primary focus:ring-2 focus:ring-surface-tint appearance-none">
+<option>A+</option>
+<option>A</option>
+<option>B+</option>
+<option>B</option>
+</select>
+</div>
+<button class="mt-5 md:mt-0 p-2 text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</div>
+<!-- Subject Row 2 -->
+<div class="bg-surface-container-low rounded-xl p-5 flex flex-wrap md:flex-nowrap items-center gap-4 border border-transparent hover:border-outline-variant/15 transition-all">
+<div class="flex-grow min-w-[200px]">
+<label class="font-label text-[10px] uppercase tracking-wider text-on-surface-variant mb-1 block">Subject Name</label>
+<input class="w-full bg-surface-container-highest/50 border-none rounded-lg px-4 py-2 focus:ring-2 focus:ring-surface-tint focus:bg-surface-container-lowest transition-all" type="text" value="Microprocessors"/>
+</div>
+<div class="w-24">
+<label class="font-label text-[10px] uppercase tracking-wider text-on-surface-variant mb-1 block">Credits</label>
+<select class="w-full bg-surface-container-highest/50 border-none rounded-lg px-3 py-2 focus:ring-2 focus:ring-surface-tint appearance-none">
+<option selected="">3</option>
+<option>4</option>
+<option>2</option>
+</select>
+</div>
+<div class="w-32">
+<label class="font-label text-[10px] uppercase tracking-wider text-on-surface-variant mb-1 block">Grade</label>
+<select class="w-full bg-surface-container-highest/50 border-none rounded-lg px-3 py-2 font-bold text-primary focus:ring-2 focus:ring-surface-tint appearance-none">
+<option selected="">A</option>
+<option>A+</option>
+<option>B+</option>
+</select>
+</div>
+<button class="mt-5 md:mt-0 p-2 text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</div>
+<!-- Subject Row 3 -->
+<div class="bg-surface-container-low rounded-xl p-5 flex flex-wrap md:flex-nowrap items-center gap-4 border border-transparent hover:border-outline-variant/15 transition-all">
+<div class="flex-grow min-w-[200px]">
+<label class="font-label text-[10px] uppercase tracking-wider text-on-surface-variant mb-1 block">Subject Name</label>
+<input class="w-full bg-surface-container-highest/50 border-none rounded-lg px-4 py-2 focus:ring-2 focus:ring-surface-tint focus:bg-surface-container-lowest transition-all" type="text" value="Economics"/>
+</div>
+<div class="w-24">
+<label class="font-label text-[10px] uppercase tracking-wider text-on-surface-variant mb-1 block">Credits</label>
+<select class="w-full bg-surface-container-highest/50 border-none rounded-lg px-3 py-2 focus:ring-2 focus:ring-surface-tint appearance-none">
+<option selected="">2</option>
+<option>4</option>
+</select>
+</div>
+<div class="w-32">
+<label class="font-label text-[10px] uppercase tracking-wider text-on-surface-variant mb-1 block">Grade</label>
+<select class="w-full bg-surface-container-highest/50 border-none rounded-lg px-3 py-2 font-bold text-primary focus:ring-2 focus:ring-surface-tint appearance-none">
+<option selected="">B+</option>
+<option>A</option>
+</select>
+</div>
+<button class="mt-5 md:mt-0 p-2 text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</div>
+<div class="pt-8 text-center">
+<button class="px-12 py-4 bg-primary text-on-primary rounded-full font-bold text-lg shadow-xl shadow-primary/20 hover:scale-[1.05] transition-transform duration-300" onclick="document.getElementById('calculation-result').classList.remove('hidden')">
+                        Calculate SGPA
+                    </button>
+</div>
+</section>
+<!-- Result Section (Initially Hidden) -->
+<section class="hidden animate-in fade-in slide-in-from-bottom-8 duration-700" id="calculation-result">
+<div class="bg-surface-container-low rounded-[2.5rem] p-8 md:p-12 border border-outline-variant/10">
+<div class="flex flex-col lg:flex-row items-center gap-12">
+<div class="flex-shrink-0 text-center lg:text-left">
+<span class="font-label text-xs uppercase tracking-[0.2em] text-primary font-bold mb-4 block">current sgpa</span>
+<div class="text-[7rem] md:text-[9rem] font-black tracking-tighter text-on-surface leading-none mb-4">8.42</div>
+<div class="inline-flex px-4 py-1.5 bg-secondary-container text-on-secondary-container rounded-full text-xs font-bold uppercase tracking-wide">First Class Distinction</div>
+</div>
+<div class="flex-grow w-full">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="space-y-6">
+<div class="border-b border-outline-variant/10 pb-4">
+<p class="text-on-surface-variant text-xs uppercase tracking-widest mb-1">Total Credits</p>
+<p class="text-3xl font-bold text-on-surface">18.0</p>
+</div>
+<div class="border-b border-outline-variant/10 pb-4">
+<p class="text-on-surface-variant text-xs uppercase tracking-widest mb-1">Grade Points</p>
+<p class="text-3xl font-bold text-on-surface">151.5</p>
+</div>
+<div class="pb-4">
+<p class="text-on-surface-variant text-xs uppercase tracking-widest mb-1">Estimated Ranking</p>
+<p class="text-3xl font-bold text-primary">Top 15%</p>
+</div>
+</div>
+<div class="flex flex-col justify-end gap-4">
+<button class="w-full bg-primary text-on-primary py-4 rounded-2xl font-bold hover:bg-primary/90 transition-colors shadow-lg shadow-primary/10">
+                                Save to History
+                            </button>
+<button class="w-full border-2 border-outline-variant/30 text-on-surface py-4 rounded-2xl font-bold hover:bg-surface-container transition-colors">
+                                Download PDF
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Secondary Action Card -->
+<div class="mt-8 bg-surface-container-low rounded-2xl p-6 flex items-center justify-between group cursor-pointer hover:bg-surface-container transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-tertiary/10 rounded-xl flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined" data-icon="insights">insights</span>
+</div>
+<div>
+<p class="font-bold text-on-surface">Grade Forecasting</p>
+<p class="text-xs text-on-surface-variant">What grade do I need in the next exam?</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform" data-icon="chevron_right">chevron_right</span>
+</div>
+</section>
+</div>
+</main>
+    </div>
+
+    <nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 bg-[#F2EAE0]/70 backdrop-blur-xl rounded-t-[1.5rem] shadow-xl shadow-[#1E1B15]/4">
+        <button onclick="navigate('welcome')" id="mob-welcome" class="mob-link flex flex-col items-center justify-center text-[#62578C] bg-[#9B8EC7]/20 rounded-2xl px-6 py-2">
+            <span class="material-symbols-outlined mb-1">home</span>
+            <span class="font-label text-[10px] uppercase tracking-[0.05em]">Home</span>
+        </button>
+        <button onclick="navigate('cgpa')" id="mob-cgpa" class="mob-link flex flex-col items-center justify-center text-[#1E1B15]/50 px-6 py-2">
+            <span class="material-symbols-outlined mb-1">calculate</span>
+            <span class="font-label text-[10px] uppercase tracking-[0.05em]">CGPA</span>
+        </button>
+        <button onclick="navigate('sgpa')" id="mob-sgpa" class="mob-link flex flex-col items-center justify-center text-[#1E1B15]/50 px-6 py-2">
+            <span class="material-symbols-outlined mb-1">analytics</span>
+            <span class="font-label text-[10px] uppercase tracking-[0.05em]">SGPA</span>
+        </button>
+    </nav>
+
+    <script src="app.js"></script>
+</body>
+</html>
