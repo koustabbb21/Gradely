@@ -31,11 +31,15 @@ function getSgpaRowTemplate() {
                 ${creditOptions}
             </select>
         </div>
-        <div class="w-32">
+        <div class="w-40">
             <label class="font-label text-[10px] uppercase tracking-wider text-on-surface-variant mb-1 block">Grade</label>
-            <select class="sgpa-grade w-full bg-surface-container-highest/50 border-none rounded-lg px-3 py-2 font-bold text-primary focus:ring-2 focus:ring-surface-tint appearance-none">
+            <select class="sgpa-grade w-full bg-surface-container-highest/50 border-none rounded-lg px-3 py-2 font-bold text-primary focus:ring-2 focus:ring-surface-tint appearance-none" onchange="this.closest('.sgpa-row').querySelector('.sgpa-points').value = this.value">
                 ${gradeOptions}
             </select>
+        </div>
+        <div class="w-20 hidden md:block">
+            <label class="font-label text-[10px] uppercase tracking-wider text-on-surface-variant mb-1 block">Points</label>
+            <input class="sgpa-points w-full border-none rounded-lg py-2 font-extrabold text-on-surface-variant bg-transparent text-center focus:outline-none pointer-events-none" type="text" value="10" readonly tabindex="-1" />
         </div>
         <button type="button" class="remove-btn mt-5 md:mt-0 p-2 text-on-surface-variant hover:text-error transition-colors">
             <span class="material-symbols-outlined" data-icon="delete">delete</span>
