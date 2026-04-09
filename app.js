@@ -16,7 +16,25 @@ const creditOptions = `
     <option value="3">3</option>
     <option value="2">2</option>
     <option value="1">1</option>
+    <option value="0">0</option>
 `;
+
+function handleCreditChange(selectEl) {
+    const row = selectEl.closest('.sgpa-row');
+    const gradeSelect = row.querySelector('.sgpa-grade');
+    const pointsInput = row.querySelector('.sgpa-points');
+    
+    if (selectEl.value === "0") {
+        gradeSelect.innerHTML = '<option value="0">P (Pass)</option><option value="0">F (Fail)</option>';
+        pointsInput.value = "-";
+    } else {
+        if (gradeSelect.innerHTML.includes("Pass")) {
+            gradeSelect.innerHTML = gradeOptions;
+            pointsInput.value = gradeSelect.value;
+        }
+    }
+}
+
 
 function getSgpaRowTemplate() {
     return `
@@ -27,13 +45,13 @@ function getSgpaRowTemplate() {
         </div>
         <div class="w-24">
             <label class="font-label text-[10px] uppercase tracking-wider text-on-surface-variant mb-1 block">Credits</label>
-            <select class="sgpa-credit w-full bg-surface-container-highest/50 border-none rounded-lg px-3 py-2 focus:ring-2 focus:ring-surface-tint appearance-none">
+            <select class="sgpa-credit w-full bg-surface-container-highest/50 border-none rounded-lg px-3 py-2 focus:ring-2 focus:ring-surface-tint appearance-none" onchange="handleCreditChange(this)">
                 ${creditOptions}
             </select>
         </div>
         <div class="w-40">
             <label class="font-label text-[10px] uppercase tracking-wider text-on-surface-variant mb-1 block">Grade</label>
-            <select class="sgpa-grade w-full bg-surface-container-highest/50 border-none rounded-lg px-3 py-2 font-bold text-primary focus:ring-2 focus:ring-surface-tint appearance-none" onchange="this.closest('.sgpa-row').querySelector('.sgpa-points').value = this.value">
+            <select class="sgpa-grade w-full bg-surface-container-highest/50 border-none rounded-lg px-3 py-2 font-bold text-primary focus:ring-2 focus:ring-surface-tint appearance-none" onchange="const credit = this.closest('.sgpa-row').querySelector('.sgpa-credit').value; this.closest('.sgpa-row').querySelector('.sgpa-points').value = credit === '0' ? '-' : this.value">
                 ${gradeOptions}
             </select>
         </div>
