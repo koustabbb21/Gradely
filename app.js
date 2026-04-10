@@ -162,10 +162,17 @@ function navigate(screenId, pushHistory = true) {
 document.addEventListener('DOMContentLoaded', () => {
     // Initial theme check
     const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
+    const icon = document.getElementById('theme-icon');
+    
+    // Default to dark if no saved theme, or respect saved 'dark'
+    if (savedTheme === 'light') {
+        document.documentElement.classList.remove('dark');
+        document.documentElement.classList.add('light');
+        if (icon) icon.innerText = 'dark_mode';
+    } else {
+        // If 'dark' or null, ensure dark is active
         document.documentElement.classList.add('dark');
         document.documentElement.classList.remove('light');
-        const icon = document.getElementById('theme-icon');
         if (icon) icon.innerText = 'light_mode';
     }
 
