@@ -36,12 +36,12 @@ function handleCreditChange(selectEl) {
 }
 
 
-function getSgpaRowTemplate() {
+function getSgpaRowTemplate(placeholderText = "enter subject name") {
     return `
     <div class="sgpa-row bg-surface-container-low rounded-xl p-5 flex flex-wrap md:flex-nowrap items-center gap-4 border border-transparent hover:border-outline-variant/15 transition-all">
         <div class="flex-grow min-w-[200px]">
             <label class="font-label text-[10px] uppercase tracking-wider text-on-surface-variant mb-1 block">Subject Name</label>
-            <input class="w-full bg-surface-container-highest/50 border-none rounded-lg px-4 py-2 focus:ring-2 focus:ring-surface-tint focus:bg-surface-container-lowest transition-all placeholder:text-on-surface-variant/40" placeholder="e.g. Data Structures" type="text" />
+            <input class="w-full bg-surface-container-highest/50 border-none rounded-lg px-4 py-2 focus:ring-2 focus:ring-surface-tint focus:bg-surface-container-lowest transition-all placeholder:text-on-surface-variant/40" placeholder="${placeholderText}" type="text" />
         </div>
         <div class="w-24">
             <label class="font-label text-[10px] uppercase tracking-wider text-on-surface-variant mb-1 block">Credits</label>
@@ -162,8 +162,9 @@ document.addEventListener('DOMContentLoaded', () => {
         sgpaSection.appendChild(rowsContainer);
         
         // Add 3 default rows
+        const defaultPlaceholders = ["Control Systems", "Digital Electronics", "Microprocessors"];
         for(let i=0; i<3; i++) {
-            rowsContainer.insertAdjacentHTML('beforeend', getSgpaRowTemplate());
+            rowsContainer.insertAdjacentHTML('beforeend', getSgpaRowTemplate(defaultPlaceholders[i]));
         }
 
         const btnContainer = document.createElement('div');
