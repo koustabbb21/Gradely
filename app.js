@@ -163,14 +163,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial theme check
     const savedTheme = localStorage.getItem('theme');
     const icon = document.getElementById('theme-icon');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     
-    // Default to dark if no saved theme, or respect saved 'dark'
-    if (savedTheme === 'light') {
+    // Use saved theme, or fallback to system preference
+    const initialTheme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
+    
+    if (initialTheme === 'light') {
         document.documentElement.classList.remove('dark');
         document.documentElement.classList.add('light');
         if (icon) icon.innerText = 'dark_mode';
     } else {
-        // If 'dark' or null, ensure dark is active
         document.documentElement.classList.add('dark');
         document.documentElement.classList.remove('light');
         if (icon) icon.innerText = 'light_mode';
