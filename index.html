@@ -115,7 +115,7 @@
         .dark .hover\:text-error:hover { color: #ff6b6b !important; }
         .dark #screen-welcome button.ethereal-gradient, .dark #screen-welcome button.bg-secondary-container { background: #091413 !important; }
         .dark #screen-welcome .w-14.h-14.bg-surface-container-highest { background-color: #091413 !important; color: #B0E4CC !important; }
-        .dark #screen-cgpa input, .dark #screen-sgpa input:not(.sgpa-points), .dark #screen-sgpa select { border: 1px solid rgba(176, 228, 204, 0.15) !important; border-radius: 0.5rem !important; background-color: rgba(40, 90, 72, 0.5) !important; backdrop-filter: blur(12px) !important; padding-left: 0.75rem !important; padding-right: 0.75rem !important; }
+        .dark #screen-cgpa input, .dark #screen-sgpa input:not(.sgpa-points), .dark #screen-sgpa select { border: none !important; border-radius: 0.5rem !important; background-color: transparent !important; backdrop-filter: blur(12px) !important; padding-left: 0.75rem !important; padding-right: 0.75rem !important; }
         .dark #screen-cgpa input:focus, .dark #screen-sgpa input:not(.sgpa-points):focus, .dark #screen-sgpa select:focus { --tw-ring-color: #285A48 !important; border-color: #285A48 !important; outline: none !important; box-shadow: 0 0 0 2px #285A48 !important; }
         .dark #screen-sgpa select { color: #FFFFFF !important; }
         .dark #screen-sgpa select option { background-color: #091413 !important; color: #FFFFFF !important; }
@@ -139,7 +139,7 @@
                     <button onclick="navigate('sgpa')" id="nav-sgpa"
                         class="nav-link text-[#1E1B15]/60 font-medium hover:text-[#62578C] transition-colors duration-400">SGPA</button>
                 </div>
-                <button id="theme-toggle" onclick="toggleTheme()" class="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-primary flex items-center justify-center">
+                <button id="theme-toggle" onclick="toggleTheme()" title="Toggle Theme" class="p-2 rounded-full transition-colors text-primary flex items-center justify-center focus:outline-none border-none">
                     <span class="material-symbols-outlined text-[24px]" id="theme-icon">light_mode</span>
                 </button>
             </div>
