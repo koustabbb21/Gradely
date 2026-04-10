@@ -79,9 +79,23 @@
             },
         }
     </script>
+    <style>
+        body, .bg-surface, .bg-background { 
+            background-image: 
+                linear-gradient(rgba(98, 87, 140, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(98, 87, 140, 0.05) 1px, transparent 1px) !important;
+            background-size: 40px 40px !important;
+        }
+    </style>
     <style id="dark-theme-overrides">
         .dark { color-scheme: dark; }
-        .dark body, .dark .bg-surface, .dark .bg-background { background-color: #091413 !important; }
+        .dark body, .dark .bg-surface, .dark .bg-background { 
+            background-color: #091413 !important;
+            background-image: 
+                linear-gradient(rgba(64, 138, 113, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(64, 138, 113, 0.05) 1px, transparent 1px) !important;
+            background-size: 40px 40px !important;
+        }
         .dark .bg-surface-container, .dark .bg-surface-container-low, .dark .bg-surface-container-high, .dark .bg-surface-container-highest { background-color: #285A48 !important; }
         .dark .bg-surface-container-lowest\/50, .dark .bg-surface-container-highest\/50 { background-color: rgba(40, 90, 72, 0.5) !important; color: #B0E4CC !important; }
         .dark .bg-secondary-container { background-color: #285A48 !important; }
