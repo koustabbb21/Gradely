@@ -1,5 +1,20 @@
 // app.js
 
+function toggleTheme() {
+    const html = document.documentElement;
+    const icon = document.getElementById('theme-icon');
+    if (html.classList.contains('dark')) {
+        html.classList.remove('dark');
+        html.classList.add('light'); // Ensure light is present
+        if (icon) icon.innerText = 'dark_mode';
+        localStorage.setItem('theme', 'light');
+    } else {
+        html.classList.add('dark');
+        html.classList.remove('light');
+        if (icon) icon.innerText = 'light_mode';
+        localStorage.setItem('theme', 'dark');
+    }
+}
 const gradeOptions = `
     <option value="10">O (>=90)</option>
     <option value="9">A+ (80-89)</option>
@@ -145,6 +160,15 @@ function navigate(screenId, pushHistory = true) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Initial theme check
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        document.documentElement.classList.add('dark');
+        document.documentElement.classList.remove('light');
+        const icon = document.getElementById('theme-icon');
+        if (icon) icon.innerText = 'light_mode';
+    }
+
     // -------------------------------------------------------------
     // Set up SGPA screen rows
     // -------------------------------------------------------------

@@ -79,6 +79,41 @@
             },
         }
     </script>
+    <style id="dark-theme-overrides">
+        .dark { color-scheme: dark; }
+        .dark body, .dark .bg-surface, .dark .bg-background { background-color: #091413 !important; }
+        .dark .bg-surface-container, .dark .bg-surface-container-low, .dark .bg-surface-container-high, .dark .bg-surface-container-highest { background-color: #285A48 !important; }
+        .dark .bg-surface-container-lowest\/50, .dark .bg-surface-container-highest\/50 { background-color: rgba(40, 90, 72, 0.5) !important; color: #B0E4CC !important; }
+        .dark .bg-secondary-container { background-color: #285A48 !important; }
+        .dark .text-on-surface, .dark .text-on-surface-variant, .dark .text-on-background { color: #B0E4CC !important; }
+        .dark .text-primary, .dark .text-primary.italic { color: #408A71 !important; }
+        .dark .bg-primary { background-color: #408A71 !important; color: #091413 !important; }
+        .dark .text-on-primary { color: #091413 !important; }
+        .dark .text-on-secondary-container { color: #408A71 !important; }
+        .dark .shadow-primary\/10 { box-shadow: 0 4px 6px -1px rgba(64, 138, 113, 0.1) !important; }
+        .dark .shadow-primary\/20 { box-shadow: 0 10px 15px -3px rgba(64, 138, 113, 0.2) !important; }
+        .dark .bg-primary-container\/10 { background-color: rgba(64, 138, 113, 0.1) !important; }
+        .dark .bg-primary-container\/20 { background-color: rgba(64, 138, 113, 0.2) !important; }
+        .dark nav { background-color: rgba(9, 20, 19, 0.8) !important; }
+        .dark nav.md\:hidden { background-color: rgba(9, 20, 19, 0.95) !important; }
+        .dark .text-\[\#1E1B15\] { color: #B0E4CC !important; }
+        .dark .text-\[\#62578C\] { color: #408A71 !important; }
+        .dark .border-\[\#62578C\] { border-color: #408A71 !important; }
+        .dark .text-\[\#1E1B15\]\/60 { color: rgba(176, 228, 204, 0.6) !important; }
+        .dark .text-\[\#1E1B15\]\/50 { color: rgba(176, 228, 204, 0.5) !important; }
+        .dark .bg-\[\#9B8EC7\]\/20 { background-color: rgba(64, 138, 113, 0.2) !important; }
+        .dark .bg-\[\#B4D3D9\]\/30 { background-color: rgba(40, 90, 72, 0.5) !important; }
+        .dark .text-\[\#466368\] { color: #408A71 !important; }
+        .dark .bg-\[\#F2EAE0\]\/70 { background-color: rgba(9, 20, 19, 0.8) !important; }
+        .dark input, .dark select { color: #B0E4CC !important; color-scheme: dark; }
+        .dark input::placeholder { color: rgba(176, 228, 204, 0.5) !important; }
+        .dark .border-outline-variant\/10 { border-color: rgba(176, 228, 204, 0.1) !important; }
+        .dark .border-outline-variant\/15 { border-color: rgba(176, 228, 204, 0.15) !important; }
+        .dark .text-outline { color: rgba(176, 228, 204, 0.5) !important; }
+        .dark footer { background-color: rgba(9, 20, 19, 0.5) !important; border-top-color: rgba(176, 228, 204, 0.1) !important; }
+        .dark .hover\:bg-surface-container-high:hover { background-color: rgba(40, 90, 72, 0.8) !important; }
+        .dark .hover\:text-error:hover { color: #ff6b6b !important; }
+    </style>
 </head>
 
 <body class="bg-surface text-on-surface font-body min-h-screen selection:bg-primary-container/30">
@@ -87,13 +122,18 @@
             <div class="text-[30px] font-extrabold tracking-tight text-[#1E1B15] cursor-pointer hover:opacity-80 transition-opacity" onclick="navigate('welcome')">
                 Gradely
             </div>
-            <div class="hidden md:flex items-center space-x-12">
-                <button onclick="navigate('welcome')" id="nav-welcome"
-                    class="nav-link text-[#62578C] border-b-2 border-[#62578C] pb-1 font-semibold transition-colors duration-400">Welcome</button>
-                <button onclick="navigate('cgpa')" id="nav-cgpa"
-                    class="nav-link text-[#1E1B15]/60 font-medium hover:text-[#62578C] transition-colors duration-400">CGPA</button>
-                <button onclick="navigate('sgpa')" id="nav-sgpa"
-                    class="nav-link text-[#1E1B15]/60 font-medium hover:text-[#62578C] transition-colors duration-400">SGPA</button>
+            <div class="flex items-center gap-6">
+                <div class="hidden md:flex items-center space-x-12">
+                    <button onclick="navigate('welcome')" id="nav-welcome"
+                        class="nav-link text-[#62578C] border-b-2 border-[#62578C] pb-1 font-semibold transition-colors duration-400">Welcome</button>
+                    <button onclick="navigate('cgpa')" id="nav-cgpa"
+                        class="nav-link text-[#1E1B15]/60 font-medium hover:text-[#62578C] transition-colors duration-400">CGPA</button>
+                    <button onclick="navigate('sgpa')" id="nav-sgpa"
+                        class="nav-link text-[#1E1B15]/60 font-medium hover:text-[#62578C] transition-colors duration-400">SGPA</button>
+                </div>
+                <button id="theme-toggle" onclick="toggleTheme()" class="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-primary flex items-center justify-center">
+                    <span class="material-symbols-outlined text-[24px]" id="theme-icon">dark_mode</span>
+                </button>
             </div>
         </div>
     </nav>
