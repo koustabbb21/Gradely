@@ -96,7 +96,11 @@ function getCgpaRowTemplate(index) {
 }
 
 // Navigation functionality
-function navigate(screenId) {
+function navigate(screenId, pushHistory = true) {
+    if (pushHistory) {
+        window.history.pushState({ screen: screenId }, '', `#${screenId}`);
+    }
+
     document.querySelectorAll('.screen-container').forEach(el => {
         el.classList.add('hidden');
         el.classList.remove('block');
@@ -256,8 +260,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const sgpaResult = document.getElementById('calculation-result');
     if (sgpaResult) sgpaResult.style.display = 'none';
     
-    // Ensure Welcome routing is active
-    navigate('welcome');
+    // Set initial route based on hash or default to welcome
+    const hash = window.location.hash.replace('#', '');
+    const initialScreen = ['welcome', 'cgpa', 'sgpa'].includes(hash) ? hash : 'welcome';
+    
+    // Replace state for the first load
+    window.history.replaceState({ screen: initialScreen }, '', `#${initialScreen}`);
+    navigate(initialScreen, false);
+});
+
+// Listen for browser back/forward buttons
+window.addEventListener('popstate', (e) => {
+    if (e.state && e.state.screen) {
+        navigate(e.state.screen, false);
+    } else {
+        const hash = window.location.hash.replace('#', '');
+        const screen = ['welcome', 'cgpa', 'sgpa'].includes(hash) ? hash : 'welcome';
+        navigate(screen, false);
+    }
 });
 
 function calculateSGPA() {
