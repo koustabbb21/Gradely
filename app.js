@@ -217,10 +217,10 @@ document.addEventListener('DOMContentLoaded', () => {
         cgpaSemestersDiv.appendChild(rowsContainer);
         
         // Add 2 initial default rows
-        let semesterCount = 0;
         const addRow = () => {
-            semesterCount++;
-            rowsContainer.insertAdjacentHTML('beforeend', getCgpaRowTemplate(semesterCount));
+            const currentCount = rowsContainer.querySelectorAll('.cgpa-row').length;
+            const nextIndex = currentCount + 1;
+            rowsContainer.insertAdjacentHTML('beforeend', getCgpaRowTemplate(nextIndex));
         };
         
         addRow();
@@ -231,6 +231,15 @@ document.addEventListener('DOMContentLoaded', () => {
         rowsContainer.addEventListener('click', (e) => {
             if (e.target.closest('.remove-btn')) {
                 e.target.closest('.cgpa-row').remove();
+                // Renumber existing rows to keep them sequential
+                const rows = rowsContainer.querySelectorAll('.cgpa-row');
+                rows.forEach((row, idx) => {
+                    const num = idx + 1;
+                    const rowIndex = row.querySelector('.row-index');
+                    if (rowIndex) rowIndex.innerText = `S${num}`;
+                    const nameInput = row.querySelector('.cgpa-name');
+                    if (nameInput) nameInput.placeholder = `Semester ${num}`;
+                });
             }
         });
 
