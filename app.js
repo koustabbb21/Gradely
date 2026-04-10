@@ -1,4 +1,6 @@
 // app.js
+history.scrollRestoration = 'manual';
+window.scrollTo(0, 0);
 
 function toggleTheme() {
     const html = document.documentElement;
@@ -115,6 +117,8 @@ function navigate(screenId, pushHistory = true) {
     if (pushHistory) {
         window.history.pushState({ screen: screenId }, '', `#${screenId}`);
     }
+
+    window.scrollTo({ top: 0, behavior: 'instant' });
 
     document.querySelectorAll('.screen-container').forEach(el => {
         el.classList.add('hidden');
@@ -281,12 +285,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // The calculate button is in a different container (Action Card)
-        const buttons = document.querySelectorAll('#screen-cgpa button');
-        buttons.forEach(btn => {
-            if (btn.innerText.includes('Calculate Final CGPA')) {
-                btn.onclick = calculateCGPA;
-            }
-        });
+        const calcCgpaBtn = document.getElementById('calc-cgpa-btn');
+        if (calcCgpaBtn) {
+            calcCgpaBtn.onclick = calculateCGPA;
+        }
     }
 
     // Hide result sections initially
